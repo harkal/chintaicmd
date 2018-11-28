@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/harkal/chintaicmd#readme",
   "dependencies": {
+    "command-line-args": "^5.0.2",
     "eosjs": "^16.0.9"
   }
 }
