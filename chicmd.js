@@ -50,14 +50,14 @@ if(!valid) {
 }
 
 function getMemo(account, stake, rate, days, ratio) {
-    return `${account}|1|${stake.toFixed(0)}|${rate.toFixed(4)}|${days}|${ratio.toFixed(4)}|${Math.random().toString(36).substring(2, 12)}`
+    return `${account}|${account}|1|${stake.toFixed(0)}|${rate.toFixed(4)}|${days}|${ratio.toFixed(4)}|${Math.random().toString(36).substring(2, 12)}`
 }
 
 function getRate(days) {
     return eos.getTableRows({
         code: config.contractName,
-        scope: 'ustakes',
-        table: 'ustakes',
+        scope: 'market',
+        table: 'market',
         limit:-1,
         json: true,
     }).then(res=>{
@@ -65,14 +65,16 @@ function getRate(days) {
             throw "No leases"
         
         let leases = res.rows.filter(l => l.duration === days * 60 * 60 * 24).sort((a,b)=> {
-            return parseFloat(b.interest) - parseFloat(a.interest)
+            return parseFloat(a.interest) - parseFloat(b.interest)
         })
 
-        let rate = leases[0].interest
-        leases = leases.filter(l => l.interest === rate)
+        console.log(leases)
+
+        let rate = leases[0].current_price
+        leases = leases.filter(l => l.current_price === rate)
         
         let sum = 0.0
-        leases.forEach(l => sum += parseFloat(l.quantity_left.slice(0, -4)))
+        leases.forEach(l => sum += parseFloat(l.sum_quantity_left.slice(0, -4)))
 
         return {
             rate: parseFloat(rate),
