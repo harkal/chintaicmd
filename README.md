@@ -17,6 +17,6 @@ this will spit out the transaction to feed to cleos to get 100 EOS staked at CPU
 Might want to use it like this:
 
 ```
-cleos push transaction `node chicmd.js -a theaccount1 --amount 100 -d 7 -r 0.30`
+cleos push transaction "`node chicmd.js -a theaccount1 --amount 100 -d 7 -r 0.30`"
 ```
 
