@@ -68,8 +68,6 @@ function getRate(days) {
             return parseFloat(a.interest) - parseFloat(b.interest)
         })
 
-        console.log(leases)
-
         let rate = leases[0].current_price
         leases = leases.filter(l => l.current_price === rate)
         
